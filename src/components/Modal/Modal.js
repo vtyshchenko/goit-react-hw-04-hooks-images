@@ -1,47 +1,52 @@
-import React, { Component } from 'react';
+import { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import styles from './Modal.module.scss';
 
-class Modal extends Component {
-  componentDidMount() {
-    window.addEventListener('keydown', this.hendleKeyDown);
-  }
+function Modal({ onClose, onLeft, onRight, children }) {
+  useEffect(() => {
+    window.addEventListener('keydown', hendleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', hendleKeyDown);
+    };
+  });
 
-  componentWillUnmount() {
-    window.removeEventListener('keydown', this.hendleKeyDown);
-  }
-
-  hendleKeyDown = event => {
+  const hendleKeyDown = event => {
     switch (event.code) {
       case 'Esc':
       case 'Escape':
-        this.props.onClose();
+        onClose();
         break;
       case 'Left':
       case 'ArrowLeft':
-        this.props.onLeft();
+        onLeft();
         break;
       case 'Right':
       case 'ArrowRight':
-        this.props.onRight();
+        onRight();
         break;
       default:
         break;
     }
   };
 
-  hendleOverlayClick = event => {
+  const hendleOverlayClick = event => {
     if (event.target === event.currentTarget) {
-      this.props.onClose({});
+      onClose({});
     }
   };
 
-  render() {
-    return (
-      <div className={styles.Overlay} onClick={this.hendleOverlayClick}>
-        <div className={styles.Modal}>{this.props.children}</div>
-      </div>
-    );
-  }
+  return (
+    <div className={styles.Overlay} onClick={hendleOverlayClick}>
+      <div className={styles.Modal}>{children}</div>
+    </div>
+  );
 }
+
+Modal.propTypes = {
+  children: PropTypes.node,
+  onClose: PropTypes.func,
+  onLeft: PropTypes.func,
+  onRight: PropTypes.func,
+};
 
 export default Modal;
