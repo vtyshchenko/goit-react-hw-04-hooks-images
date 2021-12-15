@@ -44,7 +44,7 @@ function Modal({ onClose, onLeft, onRight, children }) {
 
 Modal.propTypes = {
   children: PropTypes.node,
-  onClose: PropTypes.func,
+  onClose: PropTypes.func.isRequired,
   onLeft: PropTypes.func,
   onRight: PropTypes.func,
 };

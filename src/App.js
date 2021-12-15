@@ -38,10 +38,10 @@ function App() {
     fetchImages(findingText, page + 1, 12)
       .then(response => {
         setStatus('resolved');
-        const setImageses = findingText && findText !== findingText ? 0 : 1;
+        const isSetImageses = findingText && findText !== findingText ? false : true;
         setPage(state => state + 1);
 
-        if (setImageses === 1) {
+        if (isSetImageses) {
           setImages([...images, ...response]);
           window.scrollBy({
             top: document.documentElement.clientHeight - 260,
@@ -49,8 +49,10 @@ function App() {
           });
         } else {
           setImages([...response]);
-          document.body.scrollTop = 0; // For Safari
-          document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+          // For Safari
+          document.body.scrollTop = 0;
+          // For Chrome, Firefox, IE and Opera
+          document.documentElement.scrollTop = 0;
         }
       })
       .catch(() => {

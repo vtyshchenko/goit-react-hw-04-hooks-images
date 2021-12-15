@@ -9,10 +9,6 @@ import styles from './SearchBar.module.scss';
 function SearchBar({ onSubmit }) {
   const [searchText, setSearchText] = useState('');
 
-  const reset = () => {
-    setSearchText('');
-  };
-
   const handleSubmit = event => {
     event.preventDefault();
 
@@ -21,7 +17,7 @@ function SearchBar({ onSubmit }) {
       return;
     }
     onSubmit({ searchText });
-    reset();
+    setSearchText('');
   };
 
   const handleChange = event => {

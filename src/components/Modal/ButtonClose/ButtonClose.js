@@ -8,6 +8,7 @@ const ButtonClose = ({ children, onClick, ...anyProp }) => (
     {children}
   </button>
 );
+
 ButtonClose.defaultProps = {
   onClick: () => null,
   children: null,
